@@ -23,7 +23,7 @@ let calendar = new Calendar(calendarEl, {
     // 日付をクリック、または範囲を選択したイベント
     selectable: true,
 
-    select: function (info) {
+    select: function () {
         MicroModal.init({ disableScroll: true });
         MicroModal.show('eventModal'); // モーダルを表示する
         //alert("selected " + info.startStr + " to " + info.endStr);
@@ -51,7 +51,7 @@ let calendar = new Calendar(calendarEl, {
             });
     },
 
-    
+
     eventClick: function(info) {
         const eventId = info.event._def.extendedProps.event_id;// クリックされたイベントのIDを取得
 
@@ -74,7 +74,7 @@ let calendar = new Calendar(calendarEl, {
                     end_date: info.event.end.valueOf(),
                 })
                 .then(() => {
-                    // 更新成功時の処理（ここでは特に何もしません）
+                    location.reload(); // ページを再読み込み
                 })
                 .catch(() => {
                     // 更新失敗時の処理

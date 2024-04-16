@@ -22,7 +22,7 @@
                 <form id="eventForm"> <!-- イベントを入力するフォーム -->
                     <label for="eventName">イベント名:</label>
                     <input type="text" id="eventName" name="eventName" required>
-                    <button type="button" onclick="send()">送信</button>
+                    <button type="button" onclick="send(info)">送信</button>
                 </form>
             </main>
             <footer class="modal__footer">
