@@ -64,10 +64,8 @@ class ScheduleController extends Controller
     public function scheduleUpdate(Request $request)
     {
 
-        Log::info($request->input('event_id')); //追記
-        Log::info(date('Y-m-d', $request->input('start_date') / 1000));//追記
-        Log::info(date('Y-m-d', $request->input('end_date') / 1000)); //追記
-        Log::info($request->input('event_name')); //追記
+        $start_date = date("Y-m-d H:i:s", ($request->input('start_date') / 1000)); //追記　date関数で「2024-12-31 23:00:00」こういう出力に変える
+            Log::info($start_date);
 
         $request->validate([
             'event_id' => 'required|integer',
@@ -77,11 +75,11 @@ class ScheduleController extends Controller
         ]);
 
         //更新処理
-        $start_date = Schedule::find($request->input('event_id'));
-        $start_date->start_date = date('Y-m-d', $request->input('start_date') / 1000);
-        $start_date->end_date = date('Y-m-d', $request->input('end_date') / 1000);
-        $start_date->event_name = $request->input('event_name');
-        $start_date->save();
+        $Schedule = Schedule::find($request->input('event_id'));
+        $Schedule->start_date = date('Y-m-d', $request->input('start_date') / 1000);
+        $Schedule->end_date = date('Y-m-d', $request->input('end_date') / 1000);
+        $Schedule->event_name = $request->input('event_name');
+        $Schedule->save();
 
 
         return;

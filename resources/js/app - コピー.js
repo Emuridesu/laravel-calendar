@@ -4,9 +4,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import axios from 'axios';
-import MicroModal from 'micromodal';
-
-
 
 var calendarEl = document.getElementById("calendar");
 
@@ -22,15 +19,37 @@ let calendar = new Calendar(calendarEl, {
 
     // 日付をクリック、または範囲を選択したイベント
     selectable: true,
-
     select: function (info) {
-        MicroModal.init({ disableScroll: true });
-        MicroModal.show('eventModal'); // モーダルを表示する
+
         //alert("selected " + info.startStr + " to " + info.endStr);
 
+        // 入力ダイアログ
+        const eventName = prompt("イベントを入力してください");
 
+        if (eventName) {
+            // Laravelの登録処理の呼び出し
+            axios
+                .post("/schedule-add", {
+                    start_date: info.start.valueOf(),
+                    end_date: info.end.valueOf(),
+                    event_name: eventName,
+                })
+                .then(() => {
+                    // イベントの追加
+                    calendar.addEvent({
+                        title: eventName,
+                        start: info.start,
+                        end: info.end,
+                        allDay: true,
+                    });
+                })
+                .catch(() => {
+                    // バリデーションエラーなど
+                    alert("登録に失敗しました");
+
+                });
+        }
     },
-
     events: function (info, successCallback, failureCallback) {
         // Laravelのイベント取得処理の呼び出し
         axios
@@ -50,8 +69,6 @@ let calendar = new Calendar(calendarEl, {
                 alert("登録に失敗しました");
             });
     },
-
-    
     eventClick: function(info) {
         const eventId = info.event._def.extendedProps.event_id;// クリックされたイベントのIDを取得
 
@@ -85,35 +102,6 @@ let calendar = new Calendar(calendarEl, {
 
     });
 
-function send(info) {
 
-//以下はこれまで書いた内容なので確認しながら修正してください
-const eventName = document.getElementById('eventName').value; // イベント名を取得
 
-        if (eventName) {
-            // Laravelの登録処理の呼び出し
-            axios
-                .post("/schedule-add", {
-                    start_date: info.start.valueOf(),
-                    end_date: info.end.valueOf(),
-                    event_name: eventName,
-                })
-                .then(() => {
-                    // イベントの追加
-                    calendar.addEvent({
-                        title: eventName,
-                        start: info.start,
-                        end: info.end,
-                        allDay: true,
-
-                    });
-                     MicroModal.close('eventModal'); // モーダルを閉じる
-                })
-                .catch(() => {
-                    // バリデーションエラーなど
-                    alert("登録に失敗しました");
-
-                });
-            }
-        }
 calendar.render();

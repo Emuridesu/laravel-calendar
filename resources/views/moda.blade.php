@@ -1,20 +1,30 @@
-<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-            <header class="modal__header">
-                <h2>Editing my task list</h2>
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-            </header>
-            <main>
-                <form method="POST" action="{{ route('scheduleUpdate') }}">
-    @csrf
-                    <input type="hidden" id="id" value="id" name="start_date">
-                    <input type="text" id="edit_title" name="title" value="">
-                    <input type="date" id="edit_start" name="start" value="">
-                    <input type="color" id="edit_color" name="textColor" value="">
-                    <button class="modal__btn modal__btn-primary" type="submit">変更する</button>
-                </form>
-            </main>
-        </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js" integrity="sha512-qcwcAul7d7yUcoz3MmQABiaGDa+gVkaDWgZX6wEd/z3I6z62nQCDW3EqioQG+O+QlGCpxmJLdH5snh4IaDPiPA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<div id="calender"></div>
+
+<div id="sample-modal" aria-hidden="true">
+追加処理
+</div>
+
+<div id="update-modal" aria-hidden="true">
+更新処理
+</div>
+<div tabindex="-1" data-micromodal-close>
+    <div role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header>
+        <h2 id="modal-title">モーダルタイトル</h2>
+    </header>
+    <main>
+        <p>モーダルのコンテンツ</p>
+    </main>
+    <footer>
+        <button data-micromodal-close>閉じる</button>
+    </footer>
     </div>
 </div>
+</div>
+
+<script>
+MicroModal.init();
+</script>
