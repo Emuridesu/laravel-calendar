@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calendar</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
 <div id='calendar'></div>
@@ -22,7 +23,8 @@
                 <form id="eventForm"> <!-- イベントを入力するフォーム -->
                     <label for="eventName">イベント名:</label>
                     <input type="text" id="eventName" name="eventName" required>
-                    <button type="button" onclick="send(info)">送信</button>
+                    <button type="button" onclick="send(globalInfo)">
+                    送信</button>
                 </form>
             </main>
             <footer class="modal__footer">
@@ -32,6 +34,39 @@
     </div>
 </div>
 
+<script>
+    function send(globalInfo) {
+
+    console.log(globalInfo);
+
+const eventName = document.getElementById('eventName').value; // イベント名を取得
+        if (eventName) {
+            // Laravelの登録処理の呼び出し
+            axios
+                .post("/schedule-add", {
+                    start_date: info.start.valueOf(),
+                    end_date: info.end.valueOf(),
+                    event_name: eventName,
+                })
+                .then(() => {
+                    // イベントの追加
+                    calendar.addEvent({
+                        title: eventName,
+                        start: info.start,
+                        end: info.end,
+                        allDay: true,
+
+                    });
+                     MicroModal.close('eventModal'); // モーダルを閉じる
+                })
+                .catch(() => {
+                    // バリデーションエラーなど
+                    alert("登録に失敗しました");
+
+                });
+            }
+        }
+</script>
 </body>
 </html>
 

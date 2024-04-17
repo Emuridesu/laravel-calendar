@@ -9,6 +9,9 @@ import MicroModal from 'micromodal';
 
 
 var calendarEl = document.getElementById("calendar");
+var globalInfo;
+
+
 
 let calendar = new Calendar(calendarEl, {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
@@ -23,11 +26,13 @@ let calendar = new Calendar(calendarEl, {
     // 日付をクリック、または範囲を選択したイベント
     selectable: true,
 
-    select: function () {
-        MicroModal.init({ disableScroll: true });
-        MicroModal.show('eventModal'); // モーダルを表示する
-        //alert("selected " + info.startStr + " to " + info.endStr);
 
+    select: function (info) {
+        globalInfo = info;
+        MicroModal.init({ disableScroll: true });
+        MicroModal.show('eventModal'); // モーダルを表示(する
+        //alert("selected " + info.startStr + " to " + info.endStr);
+        console.log(globalInfo);
 
     },
 
@@ -61,6 +66,7 @@ let calendar = new Calendar(calendarEl, {
         // モーダルウィンドウを表示してイベントを編集
         const eventName = prompt("イベントを更新してください", info.event.title);
 
+
         console.log(eventName) //追記 出力できるか確認する
         console.log(info.event.start.valueOf()) //追記 出力できるか確認する
         console.log(info.event.end.valueOf()) //追記 出力できるか確認する
@@ -74,7 +80,7 @@ let calendar = new Calendar(calendarEl, {
                     end_date: info.event.end.valueOf(),
                 })
                 .then(() => {
-                    location.reload(); // ページを再読み込み
+                    //location.reload(); // ページを再読み込み
                 })
                 .catch(() => {
                     // 更新失敗時の処理
@@ -85,35 +91,5 @@ let calendar = new Calendar(calendarEl, {
 
     });
 
-function send(info) {
 
-//以下はこれまで書いた内容なので確認しながら修正してください
-const eventName = document.getElementById('eventName').value; // イベント名を取得
-
-        if (eventName) {
-            // Laravelの登録処理の呼び出し
-            axios
-                .post("/schedule-add", {
-                    start_date: info.start.valueOf(),
-                    end_date: info.end.valueOf(),
-                    event_name: eventName,
-                })
-                .then(() => {
-                    // イベントの追加
-                    calendar.addEvent({
-                        title: eventName,
-                        start: info.start,
-                        end: info.end,
-                        allDay: true,
-
-                    });
-                     MicroModal.close('eventModal'); // モーダルを閉じる
-                })
-                .catch(() => {
-                    // バリデーションエラーなど
-                    alert("登録に失敗しました");
-
-                });
-            }
-        }
 calendar.render();
