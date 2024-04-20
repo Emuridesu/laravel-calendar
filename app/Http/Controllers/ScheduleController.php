@@ -24,6 +24,8 @@ class ScheduleController extends Controller
             'event_name' => 'required|max:32',
         ]);
         Log::info(date('Y-m-d', $request->input('start_date') / 1000));
+        Log::info(date('Y-m-d', $request->input('end_date') / 1000));
+        Log::info($request->input('event_name'));
 
         //登録処理
         $schedule = new Schedule;

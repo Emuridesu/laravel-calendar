@@ -28,11 +28,11 @@ let calendar = new Calendar(calendarEl, {
 
 
     select: function (info) {
-        globalInfo = info;
         MicroModal.init({ disableScroll: true });
         MicroModal.show('eventModal'); // モーダルを表示(する
         //alert("selected " + info.startStr + " to " + info.endStr);
-        console.log(globalInfo);
+        document.getElementById('edit_start_date').value = info.start.valueOf();
+        document.getElementById('edit_end_date').value = info.end.valueOf();
 
     },
 

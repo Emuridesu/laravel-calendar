@@ -22,8 +22,10 @@
             <main class="modal__content">
                 <form id="eventForm"> <!-- イベントを入力するフォーム -->
                     <label for="eventName">イベント名:</label>
+                    <input id="edit_start_date" value type="hidden"/>
+                    <input id="edit_end_date" value type="hidden"/>
                     <input type="text" id="eventName" name="eventName" required>
-                    <button type="button" onclick="send(globalInfo)">
+                    <button type="button" onclick="send()">
                     送信</button>
                 </form>
             </main>
@@ -33,31 +35,40 @@
         </div>
     </div>
 </div>
-
 <script>
-    function send(globalInfo) {
+    function send() {
 
-    console.log(globalInfo);
 
+const startDate = document.getElementById('edit_start_date').value;
+const endDate = document.getElementById('edit_end_date').value;
 const eventName = document.getElementById('eventName').value; // イベント名を取得
+
+
+
         if (eventName) {
             // Laravelの登録処理の呼び出し
             axios
                 .post("/schedule-add", {
-                    start_date: info.start.valueOf(),
-                    end_date: info.end.valueOf(),
+                    start_date: startDate,
+                    end_date: endDate,
                     event_name: eventName,
+
                 })
+
                 .then(() => {
+                    MicroModal.close('eventModal'); // モーダルを閉じる
+                    location.reload(); // ページを再読み込み
                     // イベントの追加
-                    calendar.addEvent({
+                        calendar.addEvent({
                         title: eventName,
-                        start: info.start,
-                        end: info.end,
+                        start: startDate,
+                        end: endDate,
                         allDay: true,
 
+
                     });
-                     MicroModal.close('eventModal'); // モーダルを閉じる
+
+
                 })
                 .catch(() => {
                     // バリデーションエラーなど
@@ -66,6 +77,7 @@ const eventName = document.getElementById('eventName').value; // イベント名
                 });
             }
         }
+
 </script>
 </body>
 </html>
