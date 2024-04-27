@@ -9,8 +9,6 @@ import MicroModal from 'micromodal';
 
 
 var calendarEl = document.getElementById("calendar");
-var globalInfo;
-
 
 
 let calendar = new Calendar(calendarEl, {
@@ -33,7 +31,7 @@ let calendar = new Calendar(calendarEl, {
         //alert("selected " + info.startStr + " to " + info.endStr);
         document.getElementById('edit_start_date').value = info.start.valueOf();
         document.getElementById('edit_end_date').value = info.end.valueOf();
-
+        console.log(calendar);
     },
 
     events: function (info, successCallback, failureCallback) {
@@ -80,7 +78,7 @@ let calendar = new Calendar(calendarEl, {
                     end_date: info.event.end.valueOf(),
                 })
                 .then(() => {
-                    //location.reload(); // ページを再読み込み
+                    location.reload(); // ページを再読み込み
                 })
                 .catch(() => {
                     // 更新失敗時の処理
@@ -93,3 +91,4 @@ let calendar = new Calendar(calendarEl, {
 
 
 calendar.render();
+console.log(calendar); //内容がthen()の中に書いたconsole.log()と出力が同じか

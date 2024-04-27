@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calendar</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
 </head>
 <body>
-<div id='calendar'></div>
+<div id="calendar"></div>
 
 <!-- Event Modal -->
 <div id="eventModal" class="modal micromodal-slide" aria-hidden="true">
@@ -38,7 +39,7 @@
 <script>
     function send() {
 
-
+        console.log(calendar);
 const startDate = document.getElementById('edit_start_date').value;
 const endDate = document.getElementById('edit_end_date').value;
 const eventName = document.getElementById('eventName').value; // イベント名を取得
@@ -56,8 +57,10 @@ const eventName = document.getElementById('eventName').value; // イベント名
                 })
 
                 .then(() => {
+
+                    //location.reload(); // ページを再読み込み
                     MicroModal.close('eventModal'); // モーダルを閉じる
-                    location.reload(); // ページを再読み込み
+                    console.log(calendar);
                     // イベントの追加
                         calendar.addEvent({
                         title: eventName,
@@ -70,11 +73,11 @@ const eventName = document.getElementById('eventName').value; // イベント名
 
 
                 })
-                .catch(() => {
-                    // バリデーションエラーなど
+                .catch((error) => {
+                    //console.error("エラーが発生しました:", error);
                     alert("登録に失敗しました");
 
-                });
+                })
             }
         }
 
