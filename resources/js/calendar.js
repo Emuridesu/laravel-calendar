@@ -9,7 +9,10 @@ import MicroModal from 'micromodal';
 
 
 var calendarEl = document.getElementById("calendar");
-
+const sendButton = document.getElementById("sendButton");
+sendButton.addEventListener("click", send);
+const updateButton = document.getElementById("updateButton");
+updateButton.addEventListener("click", update);
 
 let calendar = new Calendar(calendarEl, {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
@@ -27,7 +30,7 @@ let calendar = new Calendar(calendarEl, {
 
     select: function (info) {
         MicroModal.init({ disableScroll: true });
-        MicroModal.show('eventModal'); // モーダルを表示(する
+        MicroModal.show('eventModal-add'); // モーダルを表示する
         //alert("selected " + info.startStr + " to " + info.endStr);
         document.getElementById('edit_start_date').value = info.start.valueOf();
         document.getElementById('edit_end_date').value = info.end.valueOf();
@@ -56,35 +59,17 @@ let calendar = new Calendar(calendarEl, {
 
 
     eventClick: function(info) {
-        const eventId = info.event._def.extendedProps.event_id;// クリックされたイベントのIDを取得
+        MicroModal.init({ disableScroll: true });
+        MicroModal.show('eventModal-update'); // モーダルを表示する
 
+        document.getElementById('edit_update_id').value = info.event._def.extendedProps.event_id;// クリックされたイベントのIDを取得
+        document.getElementById('edit_update_start_date').value = info.event.start.valueOf(),
+        document.getElementById('edit_update_end_date').value = info.event.end.valueOf(),
 
         console.log(info.event._def.extendedProps.event_id); //追記 eventIdが出力できるか確認する
-
-        // モーダルウィンドウを表示してイベントを編集
-        const eventName = prompt("イベントを更新してください", info.event.title);
-
-
-        console.log(eventName) //追記 出力できるか確認する
-        console.log(info.event.start.valueOf()) //追記 出力できるか確認する
-        console.log(info.event.end.valueOf()) //追記 出力できるか確認する
-
-        if (eventName) {
-            axios
-                .post("/schedule-update", {
-                    event_id: eventId,
-                    event_name: eventName,
-                    start_date: info.event.start.valueOf(),
-                    end_date: info.event.end.valueOf(),
-                })
-                .then(() => {
-                    location.reload(); // ページを再読み込み
-                })
-                .catch(() => {
-                    // 更新失敗時の処理
-                    alert("更新に失敗しました");
-                });
-            }
+        console.log(info.event.title); //追記 出力できるか確認する
+        console.log(info.event.start.valueOf());//追記 出力できるか確認する
+        console.log(info.event.end.valueOf());//追記 出力できるか確認する
         },
 
     });
@@ -92,3 +77,71 @@ let calendar = new Calendar(calendarEl, {
 
 calendar.render();
 console.log(calendar); //内容がthen()の中に書いたconsole.log()と出力が同じか
+function send() {
+
+    console.log(calendar);
+const startDate = document.getElementById('edit_start_date').value;
+const endDate = document.getElementById('edit_end_date').value;
+const eventName = document.getElementById('eventName').value; // イベント名を取得
+
+
+
+    if (eventName) {
+        // Laravelの登録処理の呼び出し
+        axios
+            .post("/schedule-add", {
+                start_date: startDate,
+                end_date: endDate,
+                event_name: eventName,
+
+            })
+
+            .then(() => {
+
+                //location.reload(); // ページを再読み込み
+                MicroModal.close('eventModal-add'); // モーダルを閉じる
+                console.log(calendar);
+                // イベントの追加
+                    calendar.addEvent({
+                    title: eventName,
+                    start: startDate,
+                    end: endDate,
+                    allDay: true,
+                    });
+                location.reload(); // ページを再読み込み
+
+            })
+            .catch((error) => {
+                //console.error("エラーが発生しました:", error);
+                alert("登録に失敗しました");
+
+            })
+        }
+    }
+
+function update() {
+    const eventId = document.getElementById('edit_update_id').value
+    const startDate = document.getElementById('edit_update_start_date').value;
+    const endDate = document.getElementById('edit_update_end_date').value;
+    const eventName = document.getElementById('eventName').value; // イベント名を取得
+
+
+    if (eventName) {
+        axios
+            .post("/schedule-update", {
+                event_id: eventId,
+                start_date: startDate,
+                end_date: endDate,
+                event_name: eventName,
+            })
+            .then(() => {
+                //MicroModal.close('eventModal-update'); // モーダルを閉じる
+                //location.reload(); // ページを再読み込み
+            })
+            .catch(() => {
+                // 更新失敗時の処理
+
+                alert("更新に失敗しました");
+            });
+        }
+    }
