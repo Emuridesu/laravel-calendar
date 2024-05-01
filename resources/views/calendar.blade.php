@@ -45,11 +45,11 @@
             </header>
             <main class="modal__content">
                 <form id="eventForm"> <!-- イベントを入力するフォーム -->
-                    <label for="eventName">イベント名:</label>
+                    <label for="updateName">イベント名:</label>
                     <input id="edit_update_id" value type="hidden"/>
                     <input id="edit_update_start_date" value type="hidden"/>
                     <input id="edit_update_end_date" value type="hidden"/>
-                    <input type="text" id="eventName" name="eventName" required>
+                    <input type="text" id="updateName" name="updateName" required>
                     <button id="updateButton" type="button">更新</button>
                 </form>
             </main>

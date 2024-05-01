@@ -82,7 +82,7 @@ function send() {
     console.log(calendar);
 const startDate = document.getElementById('edit_start_date').value;
 const endDate = document.getElementById('edit_end_date').value;
-const eventName = document.getElementById('eventName').value; // イベント名を取得
+const eventName = document.getElementById('evenName').value; // イベント名を取得
 
 
 
@@ -123,7 +123,7 @@ function update() {
     const eventId = document.getElementById('edit_update_id').value
     const startDate = document.getElementById('edit_update_start_date').value;
     const endDate = document.getElementById('edit_update_end_date').value;
-    const eventName = document.getElementById('eventName').value; // イベント名を取得
+    const eventName = document.getElementById('updateName').value; // イベント名を取得
 
 
     if (eventName) {
@@ -135,8 +135,8 @@ function update() {
                 event_name: eventName,
             })
             .then(() => {
-                //MicroModal.close('eventModal-update'); // モーダルを閉じる
-                //location.reload(); // ページを再読み込み
+                MicroModal.close('eventModal-update'); // モーダルを閉じる
+                location.reload(); // ページを再読み込み
             })
             .catch(() => {
                 // 更新失敗時の処理
