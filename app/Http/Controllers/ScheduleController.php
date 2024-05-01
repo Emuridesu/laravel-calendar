@@ -86,4 +86,15 @@ class ScheduleController extends Controller
 
         return;
     }
+
+    public function scheduledelete(Request $request)
+    {
+
+        $Schedule = Schedule::find($request->input('event_id'));
+        $Schedule->delete();
+
+
+        return;
+
+    }
 }

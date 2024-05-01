@@ -21,6 +21,8 @@ Route::post('/schedule-update', [ScheduleController::class, 'scheduleUpdate'])->
 
 Route::post('/schedule-get', [ScheduleController::class, 'scheduleGet'])->name('schedule-get');
 
+Route::post('/schedule-delete', [ScheduleController::class, 'scheduleDelete'])->name('schedule-delete');
+
 
 
 Route::get('/calendar', function () {
