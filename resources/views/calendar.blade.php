@@ -45,6 +45,8 @@
             </header>
             <main class="modal__content">
                 <form id="eventForm"> <!-- イベントを入力するフォーム -->
+                
+<!--label forをupdatenameに変更　textをupdate_nameに変更したら、処理が動いた-->
                     <label for="updateName">イベント名:</label>
                     <input id="edit_update_id" value type="hidden"/>
                     <input id="edit_update_start_date" value type="hidden"/>
