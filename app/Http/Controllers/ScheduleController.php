@@ -92,7 +92,7 @@ class ScheduleController extends Controller
 
         $Schedule = Schedule::find($request->input('event_id'));
         $Schedule->delete();
-
+        
 
         return;
 

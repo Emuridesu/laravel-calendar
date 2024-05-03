@@ -9,10 +9,15 @@ import MicroModal from 'micromodal';
 
 
 var calendarEl = document.getElementById("calendar");
+
 const sendButton = document.getElementById("sendButton");
 sendButton.addEventListener("click", send);
+
 const updateButton = document.getElementById("updateButton");
 updateButton.addEventListener("click", update);
+
+const deleteButton = document.getElementById("deleteButton");
+deleteButton.addEventListener("click", Delete);
 
 let calendar = new Calendar(calendarEl, {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
@@ -82,7 +87,7 @@ function send() {
     console.log(calendar);
 const startDate = document.getElementById('edit_start_date').value;
 const endDate = document.getElementById('edit_end_date').value;
-const eventName = document.getElementById('evenName').value; // イベント名を取得
+const eventName = document.getElementById('eventName').value; // イベント名を取得
 
 
 
@@ -145,3 +150,28 @@ function update() {
             });
         }
     }
+
+    function Delete() {
+        const eventId = document.getElementById('edit_update_id').value
+        const startDate = document.getElementById('edit_update_start_date').value;
+        const endDate = document.getElementById('edit_update_end_date').value;
+
+
+        if (eventName) {
+            axios
+                .post("/schedule-delete", {
+                    event_id: eventId,
+                    start_date: startDate,
+                    end_date: endDate,
+                })
+                .then(() => {
+                    MicroModal.close('eventModal-update'); // モーダルを閉じる
+                    location.reload(); // ページを再読み込み
+                })
+                .catch(() => {
+                    // 更新失敗時の処理
+
+                    alert("更新に失敗しました");
+                });
+            }
+        }
