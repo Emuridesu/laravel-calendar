@@ -36,7 +36,7 @@ class ScheduleController extends Controller
         return;
     }
 
-    public function scheduleget(Request $request)
+    public function scheduleGet(Request $request)
     {
 
         $request->validate([
@@ -92,7 +92,7 @@ class ScheduleController extends Controller
 
         $Schedule = Schedule::find($request->input('event_id'));
         $Schedule->delete();
-        
+
 
         return;
 
