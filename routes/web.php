@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
@@ -31,9 +32,9 @@ Route::controller(ScheduleController::class)->group(function(){
     Route::post('/schedule-delete','scheduleDelete')->name('schedule-delete');
 });
 
-Route::get('/calendar', function () {
-    return view('calendar');
-});
+// Route::get('/calendar', function () {
+//     return view('calendar');
+// });
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,10 +44,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::prefix('contacts')->middleware(['auth'])
+->controller(ContactFormController::class)
+->name('contacts.')
+->group(function () {
+    Route::get('/calendar',function () {
+        return view('calendar');
+    });
+});
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__.'/auth.php';
