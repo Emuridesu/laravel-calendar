@@ -14,6 +14,13 @@ class ScheduleController extends Controller
      *
      * @param  Request  $request
      */
+
+    public function index()
+    {
+        return view('contacts.calendar');
+    }
+
+
     public function scheduleAdd(Request $request)
     {
 

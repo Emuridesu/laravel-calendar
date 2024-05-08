@@ -30,11 +30,18 @@ Route::controller(ScheduleController::class)->group(function(){
     Route::post('/schedule-update','scheduleUpdate')->name('schedule-update');
     Route::post('/schedule-get','scheduleGet')->name('schedule-get');
     Route::post('/schedule-delete','scheduleDelete')->name('schedule-delete');
+
 });
 
-// Route::get('/calendar', function () {
-//     return view('calendar');
-// });
+
+
+Route::prefix('contacts')
+->middleware(['auth'])
+->controller(ScheduleController::class)
+->name('contacts.')
+->group(function () {
+    Route::get('/calendar', 'index')->name('calendar');
+    });
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,14 +51,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::prefix('contacts')->middleware(['auth'])
+
+Route::prefix('contacts')
+->middleware(['auth'])
 ->controller(ContactFormController::class)
 ->name('contacts.')
 ->group(function () {
-    Route::get('/calendar',function () {
-        return view('calendar');
-    });
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
 });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
