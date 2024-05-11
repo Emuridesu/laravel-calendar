@@ -11,6 +11,7 @@ import MicroModal from 'micromodal';
 var calendarEl = document.getElementById("calendar");
 
 const sendButton = document.getElementById("sendButton");
+console.log(sendButton); //とりあえずコンソールで出力する
 sendButton.addEventListener("click", send);
 
 const updateButton = document.getElementById("updateButton");
