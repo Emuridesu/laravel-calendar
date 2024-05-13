@@ -11,11 +11,11 @@ use App\Models\User;
 class ScheduleController extends Controller
 {
 
-    public function userCalendar()
+    public function userCalendar($id)
     {
-       // $user =User::findOrFail($id);
+        $user =User::findOrFail($id);
 
-        return view('user-calendar');
+        return view('user-calendar', compact('user'));
     }
     /**
      * イベントを登録
