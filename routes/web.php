@@ -51,10 +51,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/everyone', function () {
-    return view('everyone');
-})->middleware(['auth', 'verified'])->name('everyone');
-
+Route::get('/user-calendar' , [ScheduleController::class, 'userCalendar'])->middleware(['auth', 'verified'])->name('user-calendar');
 
 Route::prefix('contacts')
 ->middleware(['auth'])

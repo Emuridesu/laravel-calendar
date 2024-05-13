@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class ScheduleController extends Controller
 {
+
+    public function userCalendar()
+    {
+       // $user =User::findOrFail($id);
+
+        return view('user-calendar');
+    }
     /**
      * イベントを登録
      *
