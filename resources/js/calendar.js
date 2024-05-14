@@ -89,6 +89,7 @@ function send() {
 const startDate = document.getElementById('edit_start_date').value;
 const endDate = document.getElementById('edit_end_date').value;
 const eventName = document.getElementById('eventName').value; // イベント名を取得
+const userId = document.getElementById('eventName').value; // イベント名を取得
 
 
 

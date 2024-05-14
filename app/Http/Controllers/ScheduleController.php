@@ -7,15 +7,16 @@ use App\Models\Schedule;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
 
-    public function userCalendar($id)
+    public function userCalendar()
     {
-        $user =User::findOrFail($id);
-        
-        return view('user-calendar', compact('user'));
+        $users = User::all();
+
+        return view('user-calendar', compact('users'));
     }
     /**
      * イベントを登録
@@ -44,6 +45,7 @@ class ScheduleController extends Controller
 
         //登録処理
         $schedule = new Schedule;
+        $schedule->user_id = Auth::id();
         $schedule->start_date = date('Y-m-d', $request->input('start_date') / 1000);
         $schedule->end_date = date('Y-m-d', $request->input('end_date') / 1000);
         $schedule->event_name = $request->input('event_name');
@@ -75,6 +77,7 @@ class ScheduleController extends Controller
             //カレンダーの表示範囲のみ表示
             ->where('end_date', '>', $start_date)
             ->where('start_date', '<', $end_date)
+            ->where('user_id',Auth::id())
             ->get();
     }
 
