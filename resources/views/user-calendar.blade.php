@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                 @foreach($users as $user)
-                <a href="{{ route('user-calendar', 'id'=>Auth::)}}" class="text-blue-500">{{ $user->id }} {{ $user->name }}</a>
+                <a href="{{ route('user-calendar', ['id'=>Auth::id()])}}" class="text-blue-500">{{ $user->id }} {{ $user->name }}</a>
                 <br>
 
                 @endforeach
