@@ -14,7 +14,7 @@ class ScheduleController extends Controller
     public function userCalendar($id)
     {
         $user =User::findOrFail($id);
-
+        
         return view('user-calendar', compact('user'));
     }
     /**
