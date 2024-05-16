@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calendar</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @vite(['resources/js/calendar.js'])
+    @vite(['resources/js/othercalendar.js'])
 <a href="{{ route('dashboard') }}" class="modal__btn">top</a>
 </head>
 <body>
@@ -57,12 +57,9 @@
                     <button id="deleteButton" type="button">削除</button>
                 </form>
             </main>
-            <footer class="modal__footer">
-                <button class="modal__btn" data-micromodal-close aria-label="Close modal">閉じる</button>
-            </footer>
+
         </div>
     </div>
 </div>
 </body>
 </html>
-

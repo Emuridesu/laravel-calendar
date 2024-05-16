@@ -41,6 +41,7 @@ Route::prefix('contacts')
 ->name('contacts.')
 ->group(function () {
     Route::get('/calendar', 'index')->name('calendar');
+    Route::get('/other-calendar', 'otherindex')->name('other-calendar');
     });
 
 Route::get('/', function () {

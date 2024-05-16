@@ -18,6 +18,35 @@ class ScheduleController extends Controller
 
         return view('user-calendar', compact('users'));
     }
+
+    public function otherCalendar(Request $request)
+    {
+
+        $request->validate([
+            'start_date' => 'required|integer',
+            'end_date' => 'required|integer',
+        ]);
+
+        //カレンダー表示期間
+        $start_date = date('Y-m-d', $request->input('start_date') / 1000);
+        $end_date = date('Y-m-d', $request->input('end_date') / 1000);
+
+        //表示処理
+        return Schedule::query()
+            ->select(
+                //カレンダーの方式に合わせる
+                'event_id',
+                'start_date as start',
+                'end_date as end',
+                'event_name as title',
+                'user_id'
+            )
+            //カレンダーの表示範囲のみ表示
+            ->where('end_date', '>', $start_date)
+            ->where('start_date', '<', $end_date)
+            ->where('user_id',Auth::id())
+            ->get();
+    }
     /**
      * イベントを登録
      *
@@ -27,6 +56,10 @@ class ScheduleController extends Controller
     public function index()
     {
         return view('contacts.calendar');
+    }
+    public function otherindex()
+    {
+        return view('contacts.other-calendar');
     }
 
 
