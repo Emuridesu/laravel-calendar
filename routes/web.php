@@ -30,7 +30,7 @@ Route::controller(ScheduleController::class)->group(function(){
     Route::post('/schedule-update','scheduleUpdate')->name('schedule-update');
     Route::post('/schedule-get','scheduleGet')->name('schedule-get');
     Route::post('/schedule-delete','scheduleDelete')->name('schedule-delete');
-
+    Route::post('/other-calendar/{id}','otherCalendar')->name('other-calendar');
 });
 
 
@@ -41,7 +41,8 @@ Route::prefix('contacts')
 ->name('contacts.')
 ->group(function () {
     Route::get('/calendar', 'index')->name('calendar');
-    Route::get('/other-calendar', 'otherindex')->name('other-calendar');
+    Route::get('/other-calendar/{id}', 'otherindex')->name('other-calendar');
+
     });
 
 Route::get('/', function () {

@@ -19,8 +19,10 @@ class ScheduleController extends Controller
         return view('user-calendar', compact('users'));
     }
 
-    public function otherCalendar(Request $request)
+    public function otherCalendar(Request $request,$id)
     {
+
+
 
         $request->validate([
             'start_date' => 'required|integer',
@@ -44,7 +46,7 @@ class ScheduleController extends Controller
             //カレンダーの表示範囲のみ表示
             ->where('end_date', '>', $start_date)
             ->where('start_date', '<', $end_date)
-            ->where('user_id',Auth::id())
+            ->where('user_id',$id)
             ->get();
     }
     /**
