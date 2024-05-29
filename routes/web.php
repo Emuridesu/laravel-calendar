@@ -30,7 +30,7 @@ Route::controller(ScheduleController::class)->group(function(){
     Route::post('/schedule-update','scheduleUpdate')->name('schedule-update');
     Route::post('/schedule-get','scheduleGet')->name('schedule-get');
     Route::post('/schedule-delete','scheduleDelete')->name('schedule-delete');
-    Route::post('/other-calendar/{id}','otherCalendar')->name('other-calendar');
+    Route::post('contacts/other-calendar/{id}','otherCalendar')->name('contacts.other-calendar');
 });
 
 

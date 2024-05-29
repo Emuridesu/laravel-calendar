@@ -10,6 +10,12 @@ import MicroModal from 'micromodal';
 
 var calendarEl = document.getElementById("calendar");
 
+var element = document.getElementById("user_id");
+console.log(element); // 要素が取得できるか
+var id = element.value;
+console.log(id) //要素のvalueが取得できたか
+
+
 let calendar = new Calendar(calendarEl, {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: "dayGridMonth",
@@ -27,7 +33,7 @@ let calendar = new Calendar(calendarEl, {
     events: function (info, successCallback, failureCallback) {
         // Laravelのイベント取得処理の呼び出し
         axios
-            .post('/other-calendar'/ + id, {
+            .post('/other-calendar/${id}', {
 
                 start_date: info.start.valueOf(),
                 end_date: info.end.valueOf(),
